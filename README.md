@@ -103,12 +103,12 @@ To make prediction using the trained GenConViT model, follow these steps:
         --f <number-of-frames> \
         --d <dataset> \
         --n <model-variant>
-```
 
-    * `<path-to-video-data>`: Path to the video data or `[dfdc, faceforensics, timit, celeb]`.
-    * `<number-of-frames>`: Specify the number of frames you want to be extracted for the video prediction. The default is 15 frames.
-    * `<model-variant>`: Specify the model variant (`ed` for Encoder-Decoder or `vae` for Variational Autoencoder or Both:genconvit)
-    * `<dataset>`: the dataset type. `[dfdc, faceforensics, timit, celeb]` or yours.
+    * <path-to-video-data>: Path to the video data or `[ dfdc, faceforensics, timit, celeb ]`.
+    * <number-of-frames>: Specify the number of frames you want to be extracted for the video prediction. The default is 15 frames.
+    * <model-variant>: Specify the model variant (`ed` for Encoder-Decoder or `vae` for Variational Autoencoder or Both:genconvit)
+    * <dataset>: the dataset type. `[ dfdc, faceforensics, timit, celeb ]` or yours.
+```
 
 
 ## Results
