@@ -1,3 +1,4 @@
+
 # GenConViT Model for Deepfake Detection
 
 This repository contains the implementation code for **Deepfake Video Detection Using Generative Convolutional Vision Transformer (GenConViT)**. 
@@ -103,4 +104,3 @@ The results of the model prediction results documented in the paper can be found
 ```bash
 python result_all.py
 ```
-
