@@ -3,12 +3,14 @@
 
 This repository contains the implementation code for **Deepfake Video Detection Using Generative Convolutional Vision Transformer (GenConViT)**. 
 
-### GenConViT Model Architecture**
-The GenConViT model consists of two independent networks and incorporates the following modules:
+## GenConViT Model Architecture
 
+The GenConViT model consists of two independent networks and incorporates the following modules:
+<pre>
     Autoencoder (AE)
     Variational Autoencoder (VAE)
     ConvNeXt-Swin Hybrid layer
+</pre>
 
 The code in this repository enables training and testing of the GenConViT model for deepfake detection.
 
@@ -21,7 +23,7 @@ The code in this repository enables training and testing of the GenConViT model 
 - [Results](#results)
 
 ## Requirements
-
+<pre>
     * Python 3.x
     * PyTorch
     * numpy
@@ -33,6 +35,7 @@ The code in this repository enables training and testing of the GenConViT model 
     * opencv
     * face_recognition
     * timm
+</pre>
 
 ## Usage
 
@@ -55,7 +58,7 @@ To train the GenConViT model, follow these steps:
 1. Prepare the training data, or use the sample training data provided:
     * Ensure that the training data is located in the specified directory path.
     * The training data should be organized in the required format. The `fake` directory contains images that are fake, while the `real` directory contains images that are real.
-
+    <pre>
     **train:**
         *fake*
         *real*
@@ -65,6 +68,7 @@ To train the GenConViT model, follow these steps:
     **test:**
         *fake*
         *real*
+    </pre>
 
 2. Run the training script:
 
@@ -76,12 +80,13 @@ To train the GenConViT model, follow these steps:
         -p <pretrained-model-file> \
         -t
 ```
-
+<pre>
     * `<training-data-path>`: Path to the training data.
     * `<model-variant>`: Specify the model variant (`ed` for Encoder-Decoder or `vae` for Variational Autoencoder).
     * `<num-epochs>`: Number of epochs for training.
     * `<pretrained-model-file>` (optional): Specify the filename of a pretrained model to continue training.
     * `-t` (optional): Run the test on the test dataset after training.
+</pre>
 
 ## Deepfake Detection using GenConViT
 
@@ -98,11 +103,12 @@ To make prediction using the trained GenConViT model, follow these steps:
         --d <dataset> \
         --n <model-variant>
 ```
-
+<pre>
     * `<path-to-video-data>`: Path to the video data or `[dfdc, faceforensics, timit, celeb]`.
     * `<number-of-frames>`: Specify the number of frames you want to be extracted for the video prediction. The default is 15 frames.
     * `<model-variant>`: Specify the model variant (`ed` for Encoder-Decoder or `vae` for Variational Autoencoder or Both:genconvit)
     * `<dataset>`: the dataset type. `[dfdc, faceforensics, timit, celeb]` or yours.
+</pre>
 
 ## Results
 
