@@ -60,20 +60,14 @@ To train the GenConViT model, follow these steps:
     * The training data should be organized in the required format. The `fake` directory contains images that are fake, while the `real` directory contains images that are real.
     
     **train:**
-
-        *fake*
-
-        *real*
+        fake
+        real
     **valid:**
-
-        *fake*
-
-        *real*
+        fake
+        real
     **test:**
-
-        *fake*
-        
-        *real*
+        fake
+        real
     
 
 2. Run the training script:
