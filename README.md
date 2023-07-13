@@ -7,8 +7,8 @@ This repository contains the implementation code for **Deepfake Video Detection 
 
 The GenConViT model consists of two independent networks and incorporates the following modules:
 <pre>
-    Autoencoder (AE)
-    Variational Autoencoder (VAE)
+    Autoencoder (AE),
+    Variational Autoencoder (VAE), and
     ConvNeXt-Swin Hybrid layer
 </pre>
 
