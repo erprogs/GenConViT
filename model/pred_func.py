@@ -18,8 +18,8 @@ def load_genconvit(net):
     config = load_config()
     model = GenConViT(
         config,
-        ed="genconvit_ed_april14_inf",
-        vae="genconvit_vae_april14_inf",
+        ed="genconvit_ed_inference",
+        vae="genconvit_vae_inference",
         net=net,
     )
 
