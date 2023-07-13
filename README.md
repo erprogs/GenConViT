@@ -58,7 +58,7 @@ To train the GenConViT model, follow these steps:
 1. Prepare the training data, or use the sample training data provided:
     * Ensure that the training data is located in the specified directory path.
     * The training data should be organized in the required format. The `fake` directory contains images that are fake, while the `real` directory contains images that are real.
-    <pre>
+    
     **train:**
         *fake*
         *real*
@@ -68,7 +68,7 @@ To train the GenConViT model, follow these steps:
     **test:**
         *fake*
         *real*
-    </pre>
+    
 
 2. Run the training script:
 
