@@ -183,7 +183,7 @@ def gen_parser():
         help="Saved model file name. If you want to continue from the previous trained model.",
     )
     parser.add_option("-t", "--test", dest="test", help="run test on test dataset.")
-    parser.add_option("-b", "--batchsize", dest="batch_size", help="batch size.")
+    parser.add_option("-b", "--batch_size", dest="batch_size", help="batch size.")
 
     (options, args) = parser.parse_args()
 
@@ -192,7 +192,7 @@ def gen_parser():
     mod = "ed" if options.model == "ed" else "vae"
     test_model = "y" if options.test else None
     pretrained_model_filename = options.pretrained if options.pretrained else None
-    batch_size = args.batchsize if args.batchsize else config["batch_size"]
+    batch_size = args.batch_size if args.batch_size else config["batch_size"]
 
     return dir_path, mod, epoch, pretrained_model_filename, test_model, batch_size
 
