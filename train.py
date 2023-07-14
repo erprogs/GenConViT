@@ -108,7 +108,7 @@ def train_model(dir_path, mod, num_epochs, pretrained_model_filename, test_model
     file_name = (
         f'genconvit_{mod}_{time.strftime("%b_%d_%Y_%H_%M_%S", time.localtime())}'
     )
-    file_path = os.paht.join("weight", file_name)
+    file_path = os.path.join("weight", file_name)
 
     with open(f"{file_path}.pkl", "wb") as f:
         pickle.dump([train_loss, train_acc, valid_loss, valid_acc], f)
