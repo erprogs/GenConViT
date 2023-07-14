@@ -116,7 +116,7 @@ def train_model(dir_path, mod, num_epochs, pretrained_model_filename, test_model
         "optimizer": optimizer.state_dict(),
         "min_loss": epoch_loss,
     }
-    
+
     weight = f"{file_path}.pth"
     torch.save(state, weight)
 
@@ -142,7 +142,7 @@ def test(model, dataloaders, dataset_sizes, mod, weight):
         if mod == "ed":
             output = model(inputs).to(device).float()
         else:
-            output, _ = model(inputs).to(device).float()
+            output = model(inputs)[0].to(device).float()
 
         _, prediction = torch.max(output, 1)
 
