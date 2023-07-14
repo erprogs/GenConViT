@@ -101,11 +101,12 @@ To train the GenConViT model, follow these steps:
 To make prediction using the trained GenConViT model, follow these steps:
 
 1. Download the pretrained model from [Huggingface](https://huggingface.co/Deressa/GenConViT) and save it in the `weight` folder.
-*`Network A (ed)`* 
+
+Network A (ed) 
 ```bash
     wget https://huggingface.co/Deressa/GenConViT/resolve/main/genconvit_ed_inference.pth
 ```
-*`Network B (vae)`*
+Network B (vae)
 ```bash
     wget https://huggingface.co/Deressa/GenConViT/resolve/main/genconvit_vae_inference.pth
 ```
