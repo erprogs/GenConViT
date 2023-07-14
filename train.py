@@ -192,7 +192,7 @@ def gen_parser():
     mod = "ed" if options.model == "ed" else "vae"
     test_model = "y" if options.test else None
     pretrained_model_filename = options.pretrained if options.pretrained else None
-    batch_size = args.batch_size if args.batch_size else config["batch_size"]
+    batch_size = options.batch_size if options.batch_size else config["batch_size"]
 
     return dir_path, mod, epoch, pretrained_model_filename, test_model, batch_size
 
