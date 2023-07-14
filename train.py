@@ -117,7 +117,7 @@ def train_model(dir_path, mod, num_epochs, pretrained_model_filename, test_model
         "min_loss": epoch_loss,
     }
     
-    weight = f"{file_name}.pth"
+    weight = f"{file_path}.pth"
     torch.save(state, weight)
 
     print("Done.")
