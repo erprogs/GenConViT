@@ -119,6 +119,12 @@ To run the code, use the following command:
 
 **Example usage:** 
 ```bash
+
+    python prediction.py --p DeepfakeTIMIT --d timit --f 10 
+```
+To use ed, or vae variant:
+
+``` 
     python prediction.py --p sample_prediction_data --n vae --f 10
 
     python prediction.py --p sample_prediction_data --n ed --f 10
