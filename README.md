@@ -74,12 +74,12 @@ To train the GenConViT model, follow these steps:
 2. Run the training script:
 
 ```bash
-python train.py \
-    -d <training-data-path> \
-    -m <model-variant> \
-    -e <num-epochs> \
-    -p <pretrained-model-file> \
-    -b <batch-size> \
+python train.py
+    -d <training-data-path>
+    -m <model-variant>
+    -e <num-epochs>
+    -p <pretrained-model-file>
+    -b <batch-size>
     -t
 ```
 
