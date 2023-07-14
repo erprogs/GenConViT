@@ -105,10 +105,7 @@ def train_model(dir_path, mod, num_epochs, pretrained_model_filename, test_model
 
     print("\nSaving model...\n")
 
-    file_name = (
-        f'genconvit_{mod}_{time.strftime("%b_%d_%Y_%H_%M_%S", time.localtime())}'
-    )
-    file_path = os.path.join("weight", file_name)
+    file_path = os.path.join("weight", f'genconvit_{mod}_{time.strftime("%b_%d_%Y_%H_%M_%S", time.localtime())}')
 
     with open(f"{file_path}.pkl", "wb") as f:
         pickle.dump([train_loss, train_acc, valid_loss, valid_acc], f)
@@ -119,19 +116,20 @@ def train_model(dir_path, mod, num_epochs, pretrained_model_filename, test_model
         "optimizer": optimizer.state_dict(),
         "min_loss": epoch_loss,
     }
-
-    torch.save(state, f"{file_name}.pth")
+    
+    weight = f"{file_name}.pth"
+    torch.save(state, weight)
 
     print("Done.")
 
     if test_model:
-        test(model, dataloaders, dataset_sizes, mod, file_path)
+        test(model, dataloaders, dataset_sizes, mod, weight)
 
 
-def test(model, dataloaders, dataset_sizes, mod, file_path):
+def test(model, dataloaders, dataset_sizes, mod, weight):
     model.eval()
     print("\nRunning test...\n")
-    checkpoint = torch.load(file_path + ".pth", map_location="cpu")
+    checkpoint = torch.load(weight, map_location="cpu")
     model.load_state_dict(checkpoint["state_dict"])
 
     _ = model.eval()
