@@ -270,8 +270,11 @@ def main():
         if dataset in ["dfdc", "faceforensics", "timit", "celeb"]
         else vids(path, dataset, num_frames, net, fp16)
     )
+    
     curr_time = datetime.now().strftime("%B_%d_%Y_%H_%M_%S")
-    with open(f"result\\prediction_{dataset}_{net}_{curr_time}.json", "w") as f:
+    file_path = os.path.join("result", f"prediction_{dataset}_{net}_{curr_time}.json")
+
+    with open(file_path, "w") as f:
         json.dump(result, f)
     end_time = perf_counter()
     print("\n\n--- %s seconds ---" % (end_time - start_time))
