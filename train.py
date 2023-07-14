@@ -35,9 +35,9 @@ def load_pretrained(pretrained_model_filename):
     return model, optimizer, start_epoch, min_loss
 
 
-def train_model(dir_path, mod, num_epochs, pretrained_model_filename, test_model):
+def train_model(dir_path, mod, num_epochs, pretrained_model_filename, test_model, batch_size):
     print("Loading data...")
-    dataloaders, dataset_sizes = load_data(dir_path, config["batch_size"])
+    dataloaders, dataset_sizes = load_data(dir_path, batch_size)
     print("Done.")
 
     if mod == "ed":
@@ -183,6 +183,7 @@ def gen_parser():
         help="Saved model file name. If you want to continue from the previous trained model.",
     )
     parser.add_option("-t", "--test", dest="test", help="run test on test dataset.")
+    parser.add_option("-b", "--batch-size", dest="batch_size", help="batch size.")
 
     (options, args) = parser.parse_args()
 
@@ -191,14 +192,15 @@ def gen_parser():
     mod = "ed" if options.model == "ed" else "vae"
     test_model = "y" if options.test else None
     pretrained_model_filename = options.pretrained if options.pretrained else None
+    batch_size = args.batch_size if args.batch_size else config["batch_size"]
 
-    return dir_path, mod, epoch, pretrained_model_filename, test_model
+    return dir_path, mod, epoch, pretrained_model_filename, test_model, batch_size
 
 
 def main():
     start_time = perf_counter()
-    path, mod, epoch, pretrained_model_filename, test_model = gen_parser()
-    train_model(path, mod, epoch, pretrained_model_filename, test_model)
+    path, mod, epoch, pretrained_model_filename, test_model, batch_size = gen_parser()
+    train_model(path, mod, epoch, pretrained_model_filename, test_model, batch_size)
     end_time = perf_counter()
     print("\n\n--- %s seconds ---" % (end_time - start_time))
 
