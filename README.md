@@ -95,7 +95,8 @@ To train the GenConViT model, follow these steps:
     python train.py --d sample_train_data --m ed --e 5 -t y
 ```
 
-## Deepfake Detection using GenConViT
+## Model Testing
+**Deepfake Detection using GenConViT**
 
 To make prediction using the trained GenConViT model, follow these steps:
 
