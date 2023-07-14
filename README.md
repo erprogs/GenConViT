@@ -123,7 +123,7 @@ To run the code, use the following command:
 
     python prediction.py --p sample_prediction_data --n ed --f 10
 
-    python prediction.py --p \\DeepfakeTIMIT --n vae --d timit --f 10
+    python prediction.py --p DeepfakeTIMIT --n vae --d timit --f 10
 ```
 
 ## Results
