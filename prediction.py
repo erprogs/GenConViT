@@ -257,7 +257,7 @@ def gen_parser():
     num_frames = args.f if args.f else 15
     dataset = args.d if args.d else "other"
     net = args.n if args.n in ["ed", "vae"] else "genconvit"
-    fp16 = True args.fp16 else False
+    fp16 = True if args.fp16 else False
 
     return path, dataset, num_frames, net, fp16
 
