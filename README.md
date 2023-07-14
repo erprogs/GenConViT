@@ -42,13 +42,13 @@ The code in this repository enables training and testing of the GenConViT model 
 1. Clone this repository:
 
 ```bash
-    git clone https://github.com/erprogs/GenConViT
+git clone https://github.com/erprogs/GenConViT
 ```
 
 2. Install the required dependencies:
 
 ```bash
-    pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Model Training
@@ -69,17 +69,17 @@ To train the GenConViT model, follow these steps:
         - fake
         - real
 </pre>
-    
+ 
 
 2. Run the training script:
 
 ```bash
-    python train.py \
-        -d <training-data-path> \
-        -m <model-variant> \
-        -e <num-epochs> \
-        -p <pretrained-model-file> \
-        -t
+python train.py \
+    -d <training-data-path> \
+    -m <model-variant> \
+    -e <num-epochs> \
+    -p <pretrained-model-file> \
+    -t
 ```
 
  `<training-data-path>`: Path to the training data.<br/>
@@ -90,9 +90,9 @@ To train the GenConViT model, follow these steps:
 
 **Example usage:** 
 ```bash
-    python train.py --d sample_train_data --m vae -e 5 -t y
+python train.py --d sample_train_data --m vae -e 5 -t y
 
-    python train.py --d sample_train_data --m ed --e 5 -t y
+python train.py --d sample_train_data --m ed --e 5 -t y
 ```
 
 ## Model Testing
@@ -104,11 +104,11 @@ To make prediction using the trained GenConViT model, follow these steps:
 
 Network A (ed) 
 ```bash
-    wget https://huggingface.co/Deressa/GenConViT/resolve/main/genconvit_ed_inference.pth
+wget https://huggingface.co/Deressa/GenConViT/resolve/main/genconvit_ed_inference.pth
 ```
 Network B (vae)
 ```bash
-    wget https://huggingface.co/Deressa/GenConViT/resolve/main/genconvit_vae_inference.pth
+wget https://huggingface.co/Deressa/GenConViT/resolve/main/genconvit_vae_inference.pth
 ```
 
 2. Run the prediction script:
@@ -116,11 +116,11 @@ Network B (vae)
 To run the code, use the following command:
 
 ```bash
-    python prediction.py \
-        --p <path-to-video-data> \
-        --f <number-of-frames> \
-        --d <dataset> \
-        --n <model-variant>
+python prediction.py \
+    --p <path-to-video-data> \
+    --f <number-of-frames> \
+    --d <dataset> \
+    --n <model-variant>
 ```
   `<path-to-video-data>`: Path to the video data or `[ dfdc, faceforensics, timit, celeb ]`.<br/>
   `<number-of-frames>`: Specify the number of frames to be extracted for the video prediction. The default is 15 frames.<br/>
@@ -129,22 +129,21 @@ To run the code, use the following command:
 
 **Example usage:** 
 ```bash
-
-    python prediction.py --p DeepfakeTIMIT --d timit --f 10 
+python prediction.py --p DeepfakeTIMIT --d timit --f 10 
 ```
 To use ed, or vae variant:
 
 ``` 
-    python prediction.py --p sample_prediction_data --n vae --f 10
+python prediction.py --p sample_prediction_data --n vae --f 10
 
-    python prediction.py --p sample_prediction_data --n ed --f 10
+python prediction.py --p sample_prediction_data --n ed --f 10
 
-    python prediction.py --p DeepfakeTIMIT --n vae --d timit --f 10
+python prediction.py --p DeepfakeTIMIT --n vae --d timit --f 10
 ```
 
 ## Results
 
 The results of the model prediction documented in the paper can be found in the `result` directory. 
 ```bash
-    python result_all.py
+python result_all.py
 ```
