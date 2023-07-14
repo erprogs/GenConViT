@@ -40,7 +40,7 @@ class GenConViT(nn.Module):
                 self.model_ed.half()
                 self.model_vae.half()
             except FileNotFoundError as e:
-                raise Exception(f"Error: {e.filename} file not found.")
+                raise Exception(f"Error: Model weights file not found.")
 
 
     def forward(self, x):
@@ -50,6 +50,6 @@ class GenConViT(nn.Module):
             x,_ = self.model_vae(x)
         else:
             x1 = self.model_ed(x)
-            x2,x_hat = self.model_vae(x)
+            x2,_ = self.model_vae(x)
             x =  torch.cat((x1, x2), dim=0) #(x1+x2)/2 #
         return x

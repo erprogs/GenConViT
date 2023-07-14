@@ -104,14 +104,6 @@ class GenConViTVAE(nn.Module):
         self.relu = nn.ReLU()
         self.resize = transforms.Resize((224,224), antialias=True)
 
-    def reparameterize(self, mu, var):
-        # https://github.com/AntixK/PyTorch-VAE/blob/a6896b944c918dd7030e7d795a8c13e5c6345ec7/models/vanilla_vae.py
-        std = torch.exp(0.5*var)
-        eps = torch.randn_like(std)
-        z = eps * std + mu
-
-        return z #, std
-
     def forward(self, x):
         z = self.encoder(x)
         x_hat = self.decoder(z)
@@ -120,7 +112,5 @@ class GenConViTVAE(nn.Module):
         x2 = self.convnext_backbone(x_hat)
         x = torch.cat((x1,x2), dim=1)
         x = self.fc2(self.relu(self.fc(self.relu(x))))
-        #x = self.fc2(self.relu(self.fc(self.relu(x2))))
-        #x_f = self.fc2(self.relu(self.fc(self.relu(x2))))
         
         return x, self.resize(x_hat)

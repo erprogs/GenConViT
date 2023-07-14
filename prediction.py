@@ -46,7 +46,7 @@ def faceforensics(
         "NeuralTextures",
     ]
 
-    # load files not in training set, the files are appended with compression type, _c23 or _c40
+    # load files not used in the training set, the files are appended with compression type, _c23 or _c40
     with open(os.path.join("json_file", "ff_file_list.json")) as j_file:
         ff_file = list(json.load(j_file))
 

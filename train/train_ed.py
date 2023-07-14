@@ -100,7 +100,7 @@ def valid(
     valid_acc.append(epoch_acc.item())
 
     print(
-        "Valid set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n".format(
+        "Valid Set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n".format(
             epoch_loss,
             correct,
             len(test_loader.dataset),

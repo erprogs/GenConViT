@@ -83,7 +83,7 @@ To train the GenConViT model, follow these steps:
 ```
 
  `<training-data-path>`: Path to the training data.<br/>
- `<model-variant>`: Specify the model variant (`ed` for Encoder-Decoder or `vae` for Variational Autoencoder).<br/>
+ `<model-variant>`: Specify the model variant (`ed` for Autoencoder or `vae` for Variational Autoencoder).<br/>
  `<num-epochs>`: Number of epochs for training.<br/>
  `<pretrained-model-file>` (optional): Specify the filename of a pretrained model to continue training.<br/>
  `-t` (optional): Run the test on the test dataset after training.
@@ -106,13 +106,13 @@ To make prediction using the trained GenConViT model, follow these steps:
 ```
   `<path-to-video-data>`: Path to the video data or `[ dfdc, faceforensics, timit, celeb ]`.<br/>
   `<number-of-frames>`: Specify the number of frames to be extracted for the video prediction. The default is 15 frames.<br/>
-  `<model-variant>`: Specify the model variant (`ed` for Encoder-Decoder or `vae` for Variational Autoencoder or Both:genconvit).<br/>
+  `<model-variant>`: Specify the model variant (`ed` for Autoencoder or `vae` for Variational Autoencoder or Both:genconvit).<br/>
   `<dataset>`: the dataset type. `[ dfdc, faceforensics, timit, celeb ]` or yours.
 
 
 ## Results
 
-The results of the model prediction results documented in the paper can be found in the `results` directory. 
+The results of the model prediction documented in the paper can be found in the `result` directory. 
 ```bash
     python result_all.py
 ```

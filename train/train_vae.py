@@ -83,7 +83,7 @@ def valid(model, device, test_loader, criterion, epoch, valid_loss, valid_acc, m
 
             if batch_idx % 10 == 0:
                 print(
-                    "Test Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f} vae_Loss {:.6f}".format(
+                    "Valid Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f} vae_Loss {:.6f}".format(
                         epoch,
                         batch_idx * len(images_1),
                         len(test_loader.dataset),
@@ -103,7 +103,7 @@ def valid(model, device, test_loader, criterion, epoch, valid_loss, valid_acc, m
     valid_acc.append(epoch_acc.item())
 
     print(
-        "\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n".format(
+        "\nValid Set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n".format(
             epoch_loss,
             correct,
             len(test_loader.dataset),
