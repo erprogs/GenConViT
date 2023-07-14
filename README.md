@@ -91,7 +91,8 @@ python train.py \
 **Example usage:** 
 ```bash
 python train.py --d sample_train_data --m vae -e 5 -t y
-
+```
+```bash
 python train.py --d sample_train_data --m ed --e 5 -t y
 ```
 
@@ -135,9 +136,11 @@ To use ed, or vae variant:
 
 ``` 
 python prediction.py --p sample_prediction_data --n vae --f 10
-
+```
+```
 python prediction.py --p sample_prediction_data --n ed --f 10
-
+```
+```
 python prediction.py --p DeepfakeTIMIT --n vae --d timit --f 10
 ```
 
