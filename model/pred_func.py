@@ -25,7 +25,7 @@ def load_genconvit(net):
 
     model.to(device)
     model.eval()
-    model.half()
+    #model.half()
 
     return model
 

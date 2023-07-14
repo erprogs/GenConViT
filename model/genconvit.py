@@ -15,7 +15,7 @@ class GenConViT(nn.Module):
                 self.checkpoint_ed = torch.load(f'weight/{ed}.pth', map_location=torch.device('cpu'))
                 self.model_ed.load_state_dict(self.checkpoint_ed)
                 self.model_ed.eval()
-                self.model_ed.half()
+                #self.model_ed.half()
             except FileNotFoundError:
                 raise Exception(f"Error: weight/{ed}.pth file not found.")
         elif self.net=='vae':
@@ -24,7 +24,7 @@ class GenConViT(nn.Module):
                 self.checkpoint_vae = torch.load(f'weight/{vae}.pth', map_location=torch.device('cpu'))
                 self.model_vae.load_state_dict(self.checkpoint_vae)
                 self.model_vae.eval()
-                self.model_vae.half()
+                #self.model_vae.half()
             except FileNotFoundError:
                 raise Exception(f"Error: weight/{vae}.pth file not found.")
         else:
@@ -37,8 +37,8 @@ class GenConViT(nn.Module):
                 self.model_vae.load_state_dict(self.checkpoint_vae)
                 self.model_ed.eval()
                 self.model_vae.eval()
-                self.model_ed.half()
-                self.model_vae.half()
+                #self.model_ed.half()
+                #self.model_vae.half()
             except FileNotFoundError as e:
                 raise Exception(f"Error: Model weights file not found.")
 
