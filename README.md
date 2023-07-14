@@ -88,6 +88,12 @@ To train the GenConViT model, follow these steps:
  `<pretrained-model-file>` (optional): Specify the filename of a pretrained model to continue training.<br/>
  `-t` (optional): Run the test on the test dataset after training.
 
+**Example usage:** 
+```bash
+    python train.py --d sample_train_data --m vae -e 5 -t y
+
+    python train.py --d sample_train_data --m ed --e 5 -t y
+```
 
 ## Deepfake Detection using GenConViT
 
@@ -96,6 +102,8 @@ To make prediction using the trained GenConViT model, follow these steps:
 1. Download the pretrained model from [Huggingface](https://huggingface.co/Deressa/GenConViT)
 2. Ensure that the pretrained model file is saved in the `weight` directory.
 2. Run the prediction script:
+
+To run the code, use the following command:
 
 ```bash
     python prediction.py \
@@ -109,6 +117,14 @@ To make prediction using the trained GenConViT model, follow these steps:
   `<model-variant>`: Specify the model variant (`ed` for Autoencoder or `vae` for Variational Autoencoder or Both:genconvit).<br/>
   `<dataset>`: the dataset type. `[ dfdc, faceforensics, timit, celeb ]` or yours.
 
+**Example usage:** 
+```bash
+    python prediction.py --p sample_prediction_data --n vae --f 10
+
+    python prediction.py --p sample_prediction_data --n ed --f 10
+
+    python prediction.py --p \\DeepfakeTIMIT --n vae --d timit --f 10
+```
 
 ## Results
 

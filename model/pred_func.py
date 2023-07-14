@@ -92,7 +92,7 @@ def extract_frames(video_file, frames_nums=15):
     vr = VideoReader(video_file, ctx=cpu(0))
     step_size = max(1, len(vr) // frames_nums)  # Calculate the step size between frames
     return vr.get_batch(
-        list(range(0, len(vr), step_size))
+        list(range(0, len(vr), step_size))[:frames_nums]
     ).asnumpy()  # seek frames with step_size
 
 
