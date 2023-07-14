@@ -87,7 +87,7 @@ python train.py
 `<model-variant>`: Specify the model variant (`ed` for Autoencoder or `vae` for Variational Autoencoder).<br/>
 `<num-epochs>`: Number of epochs for training.<br/>
 `<pretrained-model-file>` (optional): Specify the filename of a pretrained model to continue training.<br/>
-`-b` (optional): Batch size for training. Default is 32.
+`-b` (optional): Batch size for training. Default is 32.<br/>
 `-t` (optional): Run the test on the test dataset after training.
 
 **Example usage:** 
