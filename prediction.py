@@ -7,19 +7,19 @@ import dlib
 from model.pred_func import *
 
 
-def vids(root_dir="sample_prediction_data", dataset=None, num_frames=15, net=None):
+def vids(root_dir="sample_prediction_data", dataset=None, num_frames=15, net=None, fp16=False):
     result = set_result()
     r = 0
     f = 0
     count = 0
-    model = load_genconvit(net)
+    model = load_genconvit(net, fp16)
 
     for filename in os.listdir(root_dir):
         curr_vid = os.path.join(root_dir, filename)
         try:
             if is_video(curr_vid):
                 result, accuracy, count, pred = predict(
-                    curr_vid, model, result, num_frames, net, "uncategorized", count
+                    curr_vid, model, fp16, result, num_frames, net, "uncategorized", count
                 )
                 f, r = (f + 1, r) if "FAKE" == real_or_fake(pred[0]) else (f, r + 1)
                 print(
@@ -33,7 +33,7 @@ def vids(root_dir="sample_prediction_data", dataset=None, num_frames=15, net=Non
 
 
 def faceforensics(
-    root_dir="FaceForensics\\data", dataset=None, num_frames=15, net=None
+    root_dir="FaceForensics\\data", dataset=None, num_frames=15, net=None, fp16=False
 ):
     vid_type = ["original_sequences", "manipulated_sequences"]
     result = set_result()
@@ -52,7 +52,7 @@ def faceforensics(
 
     count = 0
     accuracy = 0
-    model = load_genconvit(net)
+    model = load_genconvit(net, fp16)
 
     for v_t in vid_type:
         for dirpath, dirnames, filenames in os.walk(os.path.join(root_dir, v_t)):
@@ -70,6 +70,7 @@ def faceforensics(
                             result, accuracy, count, _ = predict(
                                 curr_vid,
                                 model,
+                                fp16, 
                                 result,
                                 num_frames,
                                 net,
@@ -86,10 +87,10 @@ def faceforensics(
     return result
 
 
-def timit(root_dir="DeepfakeTIMIT", dataset=None, num_frames=15, net=None):
+def timit(root_dir="DeepfakeTIMIT", dataset=None, num_frames=15, net=None, fp16=False):
     keywords = ["higher_quality", "lower_quality"]
     result = set_result()
-    model = load_genconvit(net)
+    model = load_genconvit(net, fp16)
     count = 0
     accuracy = 0
     i = 0
@@ -107,6 +108,7 @@ def timit(root_dir="DeepfakeTIMIT", dataset=None, num_frames=15, net=None):
                                 result, accuracy, count, _ = predict(
                                     curr_vid,
                                     model,
+                                    fp16, 
                                     result,
                                     num_frames,
                                     net,
@@ -126,6 +128,7 @@ def dfdc(
     dataset=None,
     num_frames=15,
     net=None,
+    fp16=False
 ):
     result = set_result()
     if os.path.isfile(os.path.join("json_file", "dfdc_files.json")):
@@ -135,7 +138,7 @@ def dfdc(
     if os.path.isfile(os.path.join(root_dir, "metadata.json")):
         with open(os.path.join(root_dir, "metadata.json")) as data_file:
             dfdc_meta = json.load(data_file)
-    model = load_genconvit(net)
+    model = load_genconvit(net, fp16)
     count = 0
     accuracy = 0
     for dfdc in dfdc_data:
@@ -146,6 +149,7 @@ def dfdc(
                 result, accuracy, count, _ = predict(
                     dfdc_file,
                     model,
+                    fp16, 
                     result,
                     num_frames,
                     net,
@@ -161,14 +165,14 @@ def dfdc(
     return result
 
 
-def celeb(root_dir="Celeb-DF-v2", dataset=None, num_frames=15, net=None):
+def celeb(root_dir="Celeb-DF-v2", dataset=None, num_frames=15, net=None, fp16=False):
     with open(os.path.join("json_file", "celeb_test.json"), "r") as f:
         cfl = json.load(f)
     result = set_result()
     ky = ["Celeb-real", "Celeb-synthesis"]
     count = 0
     accuracy = 0
-    model = load_genconvit(net)
+    model = load_genconvit(net, fp16)
 
     for ck in cfl:
         ck_ = ck.split("/")
@@ -182,6 +186,7 @@ def celeb(root_dir="Celeb-DF-v2", dataset=None, num_frames=15, net=None):
                 result, accuracy, count, _ = predict(
                     vid,
                     model,
+                    fp16, 
                     result,
                     num_frames,
                     net,
@@ -200,6 +205,7 @@ def celeb(root_dir="Celeb-DF-v2", dataset=None, num_frames=15, net=None):
 def predict(
     vid,
     model,
+    fp16, 
     result,
     num_frames,
     net,
@@ -213,6 +219,8 @@ def predict(
     print(f"\n\n{str(count)} Loading... {vid}")
 
     df = df_face(vid, num_frames, net)  # extract face from the frames
+    if fp16:
+        df.half()
     y, y_val = (
         pred_vid(df, model)
         if len(df) >= 1
@@ -242,23 +250,25 @@ def gen_parser():
         "--d", type=str, help="dataset type, dfdc, faceforensics, timit, celeb"
     )
     parser.add_argument("--n", type=str, help="network ed or vae")
+    parser.add_argument("--fp16", type=str, help="half precision support")
 
     args = parser.parse_args()
     path = args.p
     num_frames = args.f if args.f else 15
     dataset = args.d if args.d else "other"
     net = args.n if args.n in ["ed", "vae"] else "genconvit"
+    fp16 = True args.fp16 else False
 
-    return path, dataset, num_frames, net
+    return path, dataset, num_frames, net, fp16
 
 
 def main():
     start_time = perf_counter()
-    path, dataset, num_frames, net = gen_parser()
+    path, dataset, num_frames, net, fp16 = gen_parser()
     result = (
-        globals()[dataset](path, dataset, num_frames, net)
+        globals()[dataset](path, dataset, num_frames, net, fp16)
         if dataset in ["dfdc", "faceforensics", "timit", "celeb"]
-        else vids(path, dataset, num_frames, net)
+        else vids(path, dataset, num_frames, net, fp16)
     )
     curr_time = datetime.now().strftime("%B_%d_%Y_%H_%M_%S")
     with open(f"result\\prediction_{dataset}_{net}_{curr_time}.json", "w") as f:

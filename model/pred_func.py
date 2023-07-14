@@ -14,18 +14,20 @@ from decord import VideoReader, cpu
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
-def load_genconvit(net):
+def load_genconvit(net, fp16):
     config = load_config()
     model = GenConViT(
         config,
         ed="genconvit_ed_inference",
         vae="genconvit_vae_inference",
         net=net,
+        fp16=fp16
     )
 
     model.to(device)
     model.eval()
-    #model.half()
+    if fp16:
+        model.half()
 
     return model
 
@@ -70,7 +72,7 @@ def preprocess_frame(frame):
 
 def pred_vid(df, model):
     with torch.no_grad():
-        return max_prediction_value(torch.sigmoid(model(df.half()).squeeze()))
+        return max_prediction_value(torch.sigmoid(model(df).squeeze()))
 
 
 def max_prediction_value(y_pred):

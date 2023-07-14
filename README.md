@@ -122,11 +122,13 @@ python prediction.py \
     --f <number-of-frames> \
     --d <dataset> \
     --n <model-variant>
+    --fp16 <half-precision>
 ```
   `<path-to-video-data>`: Path to the video data or `[ dfdc, faceforensics, timit, celeb ]`.<br/>
   `<number-of-frames>`: Specify the number of frames to be extracted for the video prediction. The default is 15 frames.<br/>
   `<model-variant>`: Specify the model variant (`ed` for Autoencoder or `vae` for Variational Autoencoder or Both:genconvit).<br/>
   `<dataset>`: the dataset type. `[ dfdc, faceforensics, timit, celeb ]` or yours.
+  `<half-precision>`:
 
 **Example usage:** 
 ```bash
