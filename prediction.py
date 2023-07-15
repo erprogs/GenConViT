@@ -14,11 +14,10 @@ def vids(
     f = 0
     count = 0
     model = load_genconvit(net, fp16)
-    print('here',os.listdir(root_dir))
+
     for filename in os.listdir(root_dir):
-        print(filename)
         curr_vid = os.path.join(root_dir, filename)
-        print(curr_vid)
+
         try:
             if is_video(curr_vid):
                 result, accuracy, count, pred = predict(
