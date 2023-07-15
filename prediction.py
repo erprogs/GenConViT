@@ -1,13 +1,14 @@
 import os
 import argparse
 import json
-from time import perf_counter, gmtime, strptime
+from time import perf_counter
 from datetime import datetime
-import dlib
 from model.pred_func import *
 
 
-def vids(root_dir="sample_prediction_data", dataset=None, num_frames=15, net=None, fp16=False):
+def vids(
+    root_dir="sample_prediction_data", dataset=None, num_frames=15, net=None, fp16=False
+):
     result = set_result()
     r = 0
     f = 0
@@ -19,7 +20,14 @@ def vids(root_dir="sample_prediction_data", dataset=None, num_frames=15, net=Non
         try:
             if is_video(curr_vid):
                 result, accuracy, count, pred = predict(
-                    curr_vid, model, fp16, result, num_frames, net, "uncategorized", count
+                    curr_vid,
+                    model,
+                    fp16,
+                    result,
+                    num_frames,
+                    net,
+                    "uncategorized",
+                    count,
                 )
                 f, r = (f + 1, r) if "FAKE" == real_or_fake(pred[0]) else (f, r + 1)
                 print(
@@ -70,7 +78,7 @@ def faceforensics(
                             result, accuracy, count, _ = predict(
                                 curr_vid,
                                 model,
-                                fp16, 
+                                fp16,
                                 result,
                                 num_frames,
                                 net,
@@ -108,7 +116,7 @@ def timit(root_dir="DeepfakeTIMIT", dataset=None, num_frames=15, net=None, fp16=
                                 result, accuracy, count, _ = predict(
                                     curr_vid,
                                     model,
-                                    fp16, 
+                                    fp16,
                                     result,
                                     num_frames,
                                     net,
@@ -128,7 +136,7 @@ def dfdc(
     dataset=None,
     num_frames=15,
     net=None,
-    fp16=False
+    fp16=False,
 ):
     result = set_result()
     if os.path.isfile(os.path.join("json_file", "dfdc_files.json")):
@@ -149,7 +157,7 @@ def dfdc(
                 result, accuracy, count, _ = predict(
                     dfdc_file,
                     model,
-                    fp16, 
+                    fp16,
                     result,
                     num_frames,
                     net,
@@ -186,7 +194,7 @@ def celeb(root_dir="Celeb-DF-v2", dataset=None, num_frames=15, net=None, fp16=Fa
                 result, accuracy, count, _ = predict(
                     vid,
                     model,
-                    fp16, 
+                    fp16,
                     result,
                     num_frames,
                     net,
@@ -205,7 +213,7 @@ def celeb(root_dir="Celeb-DF-v2", dataset=None, num_frames=15, net=None, fp16=Fa
 def predict(
     vid,
     model,
-    fp16, 
+    fp16,
     result,
     num_frames,
     net,
@@ -270,7 +278,7 @@ def main():
         if dataset in ["dfdc", "faceforensics", "timit", "celeb"]
         else vids(path, dataset, num_frames, net, fp16)
     )
-    
+
     curr_time = datetime.now().strftime("%B_%d_%Y_%H_%M_%S")
     file_path = os.path.join("result", f"prediction_{dataset}_{net}_{curr_time}.json")
 

@@ -1,14 +1,12 @@
-import torch
 import sys, os
-import argparse
 import numpy as np
+import torch
+from torch import nn
 import torch.optim as optim
 from torch.optim import lr_scheduler
-from torch import nn
 import time
 from time import perf_counter
 import pickle
-
 from model.config import load_config
 from model.genconvit_ed import GenConViTED
 from model.genconvit_vae import GenConViTVAE
@@ -35,18 +33,18 @@ def load_pretrained(pretrained_model_filename):
     return model, optimizer, start_epoch, min_loss
 
 
-def train_model(dir_path, mod, num_epochs, pretrained_model_filename, test_model, batch_size):
+def train_model(
+    dir_path, mod, num_epochs, pretrained_model_filename, test_model, batch_size
+):
     print("Loading data...")
     dataloaders, dataset_sizes = load_data(dir_path, batch_size)
     print("Done.")
 
     if mod == "ed":
         from train.train_ed import train, valid
-
         model = GenConViTED(config)
     else:
         from train.train_vae import train, valid
-
         model = GenConViTVAE(config)
 
     optimizer = optim.Adam(
@@ -55,10 +53,9 @@ def train_model(dir_path, mod, num_epochs, pretrained_model_filename, test_model
         weight_decay=float(config["weight_decay"]),
     )
     criterion = nn.CrossEntropyLoss()
-    mse = nn.MSELoss()
     criterion.to(device)
-
-    min_val_loss = config["min_val_loss"]
+    mse = nn.MSELoss()
+    min_val_loss = int(config["min_val_loss"])
     scheduler = lr_scheduler.StepLR(optimizer, step_size=15, gamma=0.1)
 
     if pretrained_model_filename:
@@ -68,9 +65,9 @@ def train_model(dir_path, mod, num_epochs, pretrained_model_filename, test_model
 
     model.to(device)
     torch.manual_seed(1)
+    train_loss, train_acc, valid_loss, valid_acc = [], [], [], []
     since = time.time()
 
-    train_loss, train_acc, valid_loss, valid_acc = [], [], [], []
     for epoch in range(0, num_epochs):
         train_loss, train_acc, epoch_loss = train(
             model,
@@ -105,7 +102,10 @@ def train_model(dir_path, mod, num_epochs, pretrained_model_filename, test_model
 
     print("\nSaving model...\n")
 
-    file_path = os.path.join("weight", f'genconvit_{mod}_{time.strftime("%b_%d_%Y_%H_%M_%S", time.localtime())}')
+    file_path = os.path.join(
+        "weight",
+        f'genconvit_{mod}_{time.strftime("%b_%d_%Y_%H_%M_%S", time.localtime())}',
+    )
 
     with open(f"{file_path}.pkl", "wb") as f:
         pickle.dump([train_loss, train_acc, valid_loss, valid_acc], f)
@@ -127,11 +127,10 @@ def train_model(dir_path, mod, num_epochs, pretrained_model_filename, test_model
 
 
 def test(model, dataloaders, dataset_sizes, mod, weight):
-    model.eval()
     print("\nRunning test...\n")
+    model.eval()
     checkpoint = torch.load(weight, map_location="cpu")
     model.load_state_dict(checkpoint["state_dict"])
-
     _ = model.eval()
 
     Sum = 0
@@ -194,7 +193,7 @@ def gen_parser():
     pretrained_model_filename = options.pretrained if options.pretrained else None
     batch_size = options.batch_size if options.batch_size else config["batch_size"]
 
-    return dir_path, mod, epoch, pretrained_model_filename, test_model, batch_size
+    return dir_path, mod, epoch, pretrained_model_filename, test_model, int(batch_size)
 
 
 def main():
