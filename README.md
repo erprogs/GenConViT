@@ -7,8 +7,8 @@ This repository contains the implementation code for **Deepfake Video Detection 
 
 The GenConViT model consists of two independent networks and incorporates the following modules:
 <pre>
-    Autoencoder (AE),
-    Variational Autoencoder (VAE), and
+    Autoencoder (ed),
+    Variational Autoencoder (vae), and
     ConvNeXt-Swin Hybrid layer
 </pre>
 
@@ -130,7 +130,7 @@ python prediction.py \
 ```
   `<path-to-video-data>`: Path to the video data or `[ dfdc, faceforensics, timit, celeb ]`.<br/>
   `<number-of-frames>`: Specify the number of frames to be extracted for the video prediction. The default is 15 frames.<br/>
-  `<model-variant>`: Specify the model variant (`ed` for Autoencoder or `vae` for Variational Autoencoder or Both:genconvit).<br/>
+  `<model-variant>`: Specify the model variant (`ed` or `vae` or both:genconvit).<br/>
   `<dataset>`: the dataset type. `[ dfdc, faceforensics, timit, celeb ]` or yours.
   `<half-precision>`:
 
