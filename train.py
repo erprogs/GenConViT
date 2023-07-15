@@ -184,7 +184,7 @@ def gen_parser():
     parser.add_option("-t", "--test", dest="test", help="run test on test dataset.")
     parser.add_option("-b", "--batch_size", dest="batch_size", help="batch size.")
 
-    (options, args) = parser.parse_args()
+    (options, _) = parser.parse_args()
 
     dir_path = options.dir
     epoch = options.epoch
