@@ -90,7 +90,7 @@ python train.py
 `-b` (optional): Batch size for training. Default is 32.<br/>
 `-t` (optional): Run the test on the test dataset after training.
 
-The model weights and metrics are saved in the `result` folder.
+The model weights and metrics are saved in the `weight` folder.
 
 **Example usage:** 
 ```bash
