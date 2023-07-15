@@ -90,6 +90,8 @@ python train.py
 `-b` (optional): Batch size for training. Default is 32.<br/>
 `-t` (optional): Run the test on the test dataset after training.
 
+The model weights and metrics are saved in the `result` folder.
+
 **Example usage:** 
 ```bash
 python train.py --d sample_train_data --m vae -e 5 -t y
