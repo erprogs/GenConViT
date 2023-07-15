@@ -14,9 +14,11 @@ def vids(
     f = 0
     count = 0
     model = load_genconvit(net, fp16)
-
+    print('here',os.listdir(root_dir))
     for filename in os.listdir(root_dir):
+        print(filename)
         curr_vid = os.path.join(root_dir, filename)
+        print(curr_vid)
         try:
             if is_video(curr_vid):
                 result, accuracy, count, pred = predict(
@@ -33,6 +35,8 @@ def vids(
                 print(
                     f"Prediction: {pred[1]} {real_or_fake(pred[0])} \t\tFake: {f} Real: {r}"
                 )
+            else:
+                print(f"Invalid video file: {curr_vid}. Please provide a valid video file.")
 
         except Exception as e:
             print(f"An error occurred: {str(e)}")
@@ -88,6 +92,8 @@ def faceforensics(
                                 label,
                                 compression,
                             )
+                        else:
+                            print(f"Invalid video file: {curr_vid}. Please provide a valid video file.")
 
                 except Exception as e:
                     print(f"An error occurred: {str(e)}")
@@ -125,6 +131,9 @@ def timit(root_dir="DeepfakeTIMIT", dataset=None, num_frames=15, net=None, fp16=
                                     accuracy,
                                     "FAKE",
                                 )
+                            else:
+                                print(f"Invalid video file: {curr_vid}. Please provide a valid video file.")
+
                         except Exception as e:
                             print(f"An error occurred: {str(e)}")
 
@@ -166,6 +175,8 @@ def dfdc(
                     accuracy,
                     dfdc_meta[dfdc]["label"],
                 )
+            else:
+                print(f"Invalid video file: {curr_vid}. Please provide a valid video file.")
 
         except Exception as e:
             print(f"An error occurred: {str(e)}")
@@ -203,6 +214,8 @@ def celeb(root_dir="Celeb-DF-v2", dataset=None, num_frames=15, net=None, fp16=Fa
                     accuracy,
                     correct_label,
                 )
+            else:
+                print(f"Invalid video file: {curr_vid}. Please provide a valid video file.")
 
         except Exception as e:
             print(f"An error occurred x: {str(e)}")
