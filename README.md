@@ -1,7 +1,7 @@
 
 # GenConViT Model for Deepfake Video Detection.
 
-This repository contains the implementation code for **Deepfake Video Detection Using Generative Convolutional Vision Transformer (GenConViT)** paper. Find the full paper on arXiv [here](https://arxiv.org/abs/2307.07036){:target="_blank"}.
+This repository contains the implementation code for **Deepfake Video Detection Using Generative Convolutional Vision Transformer (GenConViT)** paper. Find the full paper on arXiv <a href="https://arxiv.org/abs/2307.07036" target="_blank">here</a>.
 
 ## GenConViT Model Architecture
 
