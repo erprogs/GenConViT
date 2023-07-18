@@ -166,16 +166,15 @@ python result_all.py
 ```
 
 ## Bibtex
-`
-@misc{wodajo2023deepfake,
-      title={Deepfake Video Detection Using Generative Convolutional Vision Transformer}, 
-      author={Deressa Wodajo and Solomon Atnafu and Zahid Akhtar},
-      year={2023},
-      eprint={2307.07036},
-      archivePrefix={arXiv},
+
+@misc{wodajo2023deepfake,<br/>
+      title={Deepfake Video Detection Using Generative Convolutional Vision Transformer},<br/> 
+      author={Deressa Wodajo and Solomon Atnafu and Zahid Akhtar},<br/>
+      year={2023},<br/>
+      eprint={2307.07036},<br/>
+      archivePrefix={arXiv},<br/>
       primaryClass={cs.CV}
 }
-`
 
 ## Acknowledgement
 
