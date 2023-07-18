@@ -166,7 +166,7 @@ python result_all.py
 ```
 
 ## Bibtex
-
+`
 @misc{wodajo2023deepfake,
       title={Deepfake Video Detection Using Generative Convolutional Vision Transformer}, 
       author={Deressa Wodajo and Solomon Atnafu and Zahid Akhtar},
@@ -175,6 +175,7 @@ python result_all.py
       archivePrefix={arXiv},
       primaryClass={cs.CV}
 }
+`
 
 ## Acknowledgement
 
