@@ -164,3 +164,18 @@ The results of the model prediction documented in the paper can be found in the 
 ```bash
 python result_all.py
 ```
+
+## Bibtex
+
+@misc{wodajo2023deepfake,
+      title={Deepfake Video Detection Using Generative Convolutional Vision Transformer}, 
+      author={Deressa Wodajo and Solomon Atnafu and Zahid Akhtar},
+      year={2023},
+      eprint={2307.07036},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+
+## Acknowledgement
+
+This research was funded by Addis Ababa University Research Grant for the Adaptive Problem-Solving Research. Reference number RD/PY-183/2021. Grant number AR/048/2021.
