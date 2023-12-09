@@ -214,7 +214,7 @@ def celeb(root_dir="Celeb-DF-v2", dataset=None, num_frames=15, net=None, fp16=Fa
                     correct_label,
                 )
             else:
-                print(f"Invalid video file: {curr_vid}. Please provide a valid video file.")
+                print(f"Invalid video file: {vid}. Please provide a valid video file.")
 
         except Exception as e:
             print(f"An error occurred x: {str(e)}")
