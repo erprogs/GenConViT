@@ -74,17 +74,23 @@ def pred_vid(df, model):
     with torch.no_grad():
         return max_prediction_value(torch.sigmoid(model(df).squeeze()))
 
-
-def max_prediction_value(y_pred):
-    # Finds the index and value of the maximum prediction value.
-    mean_val = torch.mean(y_pred, dim=0)
-    return (
-        torch.argmax(mean_val).item(),
-        mean_val[0].item()
-        if mean_val[0] > mean_val[1]
-        else abs(1 - mean_val[1]).item(),
-    )
-
+def max_prediction_value3(y_pred):
+    if y_pred.dim() == 1 and y_pred.size(0) == 2:
+        # When y_pred is a 1D tensor with two elements, 
+        # no need to take the mean across the frames
+        pred_label = torch.argmax(y_pred).item()
+        pred_val = y_pred[pred_label].item()
+        return (pred_label, pred_val)
+    else:
+        # Compute the mean value across the batch dimension (dim=0)
+        mean_val = torch.mean(y_pred, dim=0)
+        # Still, check if mean_val is not a 0-dimensional tensor, just to be safe
+        if mean_val.dim() == 0:
+            mean_val_val = mean_val.item()
+            return (0, mean_val_val) if mean_val_val > 0.5 else (1, 1 - mean_val_val)
+        pred_label = torch.argmax(mean_val).item()
+        pred_val = mean_val[pred_label].item()
+        return (pred_label, pred_val)
 
 def real_or_fake(prediction):
     return {0: "REAL", 1: "FAKE"}[prediction ^ 1]
