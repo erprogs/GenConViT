@@ -146,16 +146,44 @@ python prediction.py \
 ```bash
 python prediction.py --p DeepfakeTIMIT --d timit --f 10 
 ```
-To use ed, or vae variant:
+To use VAE or ED variant:
 
+VAE:
 ``` 
-python prediction.py --p sample_prediction_data --n vae --f 10
+python prediction.py --p sample_prediction_data --v --f 10
 ```
+
+ED:
 ```
-python prediction.py --p sample_prediction_data --n ed --f 10
+python prediction.py --p sample_prediction_data --e --f 10
 ```
+
+VAE test on DeepfakeTIMIT dataset:
 ```
-python prediction.py --p DeepfakeTIMIT --n vae --d timit --f 10
+python prediction.py --p DeepfakeTIMIT --v --d timit --f 10
+```
+run VAE and ED (GENCONVIT):
+
+```
+python prediction.py --p sample_prediction_data --e --v --f 10
+```
+
+If you have trained a new model (e.g., if we have weight/genconvit_vae_May_16_2024_09_34_21.pth) and want to test it, use the following:
+
+VAE:
+```
+python prediction.py --p sample_prediction_data --v genconvit_vae_May_16_2024_09_34_21 --f 10
+```
+
+ED:
+```
+python prediction.py --p sample_prediction_data --e genconvit_ed_May_16_2024_10_18_09 --f 10
+```
+
+BOTH VAE and ED (GENCONVIT):
+
+```
+python prediction.py --p sample_prediction_data --e genconvit_ed_May_16_2024_10_18_09 --v genconvit_vae_May_16_2024_09_34_21 --f 10
 ```
 
 ## Results
