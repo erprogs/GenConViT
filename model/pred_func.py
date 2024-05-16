@@ -14,12 +14,11 @@ from decord import VideoReader, cpu
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
-def load_genconvit(net, fp16):
-    config = load_config()
+def load_genconvit(config, net, ed_weight, vae_weight, fp16):
     model = GenConViT(
         config,
-        ed="genconvit_ed_inference",
-        vae="genconvit_vae_inference",
+        ed= ed_weight,
+        vae= vae_weight, 
         net=net,
         fp16=fp16
     )
@@ -105,6 +104,7 @@ def df_face(vid, num_frames, net):
 
 
 def is_video(vid):
+    print('IS FILE', os.path.isfile(vid))
     return os.path.isfile(vid) and vid.endswith(
         tuple([".avi", ".mp4", ".mpg", ".mpeg", ".mov"])
     )
