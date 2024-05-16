@@ -279,28 +279,36 @@ def gen_parser():
         "--s", help="model size type: tiny, large.",
     )
     parser.add_argument(
-        "--w", help="weight for ed or for vae.",
+        "--e", help="weight for ed.",
     )
-    parser.add_argument("--n", type=str, help="network ed or vae")
+    parser.add_argument(
+        "--v", help="weight for vae.",
+    )
     parser.add_argument("--fp16", type=str, help="half precision support")
 
     args = parser.parse_args()
     path = args.p
     num_frames = args.f if args.f else 15
     dataset = args.d if args.d else "other"
-    net = args.n if args.n in ["ed", "vae"] else "genconvit"
     fp16 = True if args.fp16 else False
 
-    if args.w and net == 'ed':
-        ed_weight = args.w
-    else:
-        ed_weight = 'genconvit_ed_inference'
+    net = 'genconvit'
+    ed_weight = 'genconvit_ed_inference'
+    vae_weight = 'genconvit_vae_inference'
 
-
-    if args.w and net == 'vae':
-        vae_weight = args.w
-    else:
-        vae_weight = 'genconvit_vae_inference'
+    if args.e and args.v:
+        ed_weight = args.e
+        vae_weight = args.v
+    elif args.e:
+        net = 'ed'
+        ed_weight = args.e
+    elif args.v:
+        net = 'vae'
+        vae_weight = args.v
+    
+        
+    print(f'\nUsing {net}\n')  
+    
 
     if args.s:
         if args.s in ['tiny', 'large']:
