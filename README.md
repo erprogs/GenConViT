@@ -133,7 +133,8 @@ python prediction.py \
     --p <path-to-video-data> \
     --f <number-of-frames> \
     --d <dataset> \
-    --n <model-variant>
+    --e <ed-model-weight-name-(without .pth)> \
+    --v <vae-model-weight-name-(without .pth)> \
     --fp16 <half-precision>
 ```
   `<path-to-video-data>`: Path to the video data or `[ dfdc, faceforensics, timit, celeb ]`.<br/>
