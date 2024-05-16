@@ -168,7 +168,7 @@ run VAE and ED (GENCONVIT): *this runs the provided weights as a defualt*
 python prediction.py --p sample_prediction_data --e --v --f 10
 ```
 
-**Testing a New Model:**
+**Testing a new model:**
 
 
 If you have trained a new model (e.g., if we have `weight/genconvit_vae_May_16_2024_09_34_21.pth`) and want to test it, use the following:
