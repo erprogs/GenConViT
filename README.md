@@ -162,7 +162,7 @@ VAE test on DeepfakeTIMIT dataset:
 ```
 python prediction.py --p DeepfakeTIMIT --v --d timit --f 10
 ```
-run VAE and ED (GENCONVIT):
+run VAE and ED (GENCONVIT): *this runs the provided weights as a defualt*
 
 ```
 python prediction.py --p sample_prediction_data --e --v --f 10
