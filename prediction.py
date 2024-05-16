@@ -4,16 +4,20 @@ import json
 from time import perf_counter
 from datetime import datetime
 from model.pred_func import *
+from model.config import load_config
 
-
+config = load_config()
+print('CONFIG')
+print(config)
 def vids(
-    root_dir="sample_prediction_data", dataset=None, num_frames=15, net=None, fp16=False
+    ed_weight, vae_weight, root_dir="sample_prediction_data", dataset=None, num_frames=15, net=None, fp16=False
 ):
     result = set_result()
     r = 0
     f = 0
     count = 0
-    model = load_genconvit(net, fp16)
+    
+    model = load_genconvit(config, net, ed_weight, vae_weight, fp16)
 
     for filename in os.listdir(root_dir):
         curr_vid = os.path.join(root_dir, filename)
@@ -44,7 +48,7 @@ def vids(
 
 
 def faceforensics(
-    root_dir="FaceForensics\\data", dataset=None, num_frames=15, net=None, fp16=False
+    ed_weight, vae_weight, root_dir="FaceForensics\\data", dataset=None, num_frames=15, net=None, fp16=False
 ):
     vid_type = ["original_sequences", "manipulated_sequences"]
     result = set_result()
@@ -63,7 +67,7 @@ def faceforensics(
 
     count = 0
     accuracy = 0
-    model = load_genconvit(net, fp16)
+    model = load_genconvit(config, net, ed_weight, vae_weight, fp16)
 
     for v_t in vid_type:
         for dirpath, dirnames, filenames in os.walk(os.path.join(root_dir, v_t)):
@@ -100,10 +104,10 @@ def faceforensics(
     return result
 
 
-def timit(root_dir="DeepfakeTIMIT", dataset=None, num_frames=15, net=None, fp16=False):
+def timit(ed_weight, vae_weight, root_dir="DeepfakeTIMIT", dataset=None, num_frames=15, net=None, fp16=False):
     keywords = ["higher_quality", "lower_quality"]
     result = set_result()
-    model = load_genconvit(net, fp16)
+    model = load_genconvit(config, net, ed_weight, vae_weight, fp16)
     count = 0
     accuracy = 0
     i = 0
@@ -140,6 +144,8 @@ def timit(root_dir="DeepfakeTIMIT", dataset=None, num_frames=15, net=None, fp16=
 
 
 def dfdc(
+    ed_weight,
+    vae_weight,
     root_dir="deepfake-detection-challenge\\train_sample_videos",
     dataset=None,
     num_frames=15,
@@ -154,7 +160,7 @@ def dfdc(
     if os.path.isfile(os.path.join(root_dir, "metadata.json")):
         with open(os.path.join(root_dir, "metadata.json")) as data_file:
             dfdc_meta = json.load(data_file)
-    model = load_genconvit(net, fp16)
+    model = load_genconvit(config, net, ed_weight, vae_weight, fp16)
     count = 0
     accuracy = 0
     for dfdc in dfdc_data:
@@ -175,7 +181,7 @@ def dfdc(
                     dfdc_meta[dfdc]["label"],
                 )
             else:
-                print(f"Invalid video file: {curr_vid}. Please provide a valid video file.")
+                print(f"Invalid video file: {dfdc_file}. Please provide a valid video file.")
 
         except Exception as e:
             print(f"An error occurred: {str(e)}")
@@ -183,14 +189,14 @@ def dfdc(
     return result
 
 
-def celeb(root_dir="Celeb-DF-v2", dataset=None, num_frames=15, net=None, fp16=False):
+def celeb(ed_weight, vae_weight, root_dir="Celeb-DF-v2", dataset=None, num_frames=15, net=None, fp16=False):
     with open(os.path.join("json_file", "celeb_test.json"), "r") as f:
         cfl = json.load(f)
     result = set_result()
     ky = ["Celeb-real", "Celeb-synthesis"]
     count = 0
     accuracy = 0
-    model = load_genconvit(net, fp16)
+    model = load_genconvit(config, net, ed_weight, vae_weight, fp16)
 
     for ck in cfl:
         ck_ = ck.split("/")
@@ -269,6 +275,12 @@ def gen_parser():
     parser.add_argument(
         "--d", type=str, help="dataset type, dfdc, faceforensics, timit, celeb"
     )
+    parser.add_argument(
+        "--s", help="model size type: tiny, large.",
+    )
+    parser.add_argument(
+        "--w", help="weight for ed or for vae.",
+    )
     parser.add_argument("--n", type=str, help="network ed or vae")
     parser.add_argument("--fp16", type=str, help="half precision support")
 
@@ -279,16 +291,33 @@ def gen_parser():
     net = args.n if args.n in ["ed", "vae"] else "genconvit"
     fp16 = True if args.fp16 else False
 
-    return path, dataset, num_frames, net, fp16
+    if args.w and net == 'ed':
+        ed_weight = args.w
+    else:
+        ed_weight = 'genconvit_ed_inference'
+
+
+    if args.w and net == 'vae':
+        vae_weight = args.w
+    else:
+        vae_weight = 'genconvit_vae_inference'
+
+    if args.s:
+        if args.s in ['tiny', 'large']:
+            config["model"]["backbone"] = f"convnext_{args.s}"
+            config["model"]["embedder"] = f"swin_{args.s}_patch4_window7_224"
+            config["model"]["type"] = args.s
+    
+    return path, dataset, num_frames, net, fp16, ed_weight, vae_weight
 
 
 def main():
     start_time = perf_counter()
-    path, dataset, num_frames, net, fp16 = gen_parser()
+    path, dataset, num_frames, net, fp16, ed_weight, vae_weight = gen_parser()
     result = (
-        globals()[dataset](path, dataset, num_frames, net, fp16)
+        globals()[dataset](ed_weight, vae_weight, path, dataset, num_frames, net, fp16)
         if dataset in ["dfdc", "faceforensics", "timit", "celeb"]
-        else vids(path, dataset, num_frames, net, fp16)
+        else vids(ed_weight, vae_weight, path, dataset, num_frames, net, fp16)
     )
 
     curr_time = datetime.now().strftime("%B_%d_%Y_%H_%M_%S")
