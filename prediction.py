@@ -279,11 +279,12 @@ def gen_parser():
         "--s", help="model size type: tiny, large.",
     )
     parser.add_argument(
-        "--e", help="weight for ed.",
+        "--e", nargs='?', const='genconvit_ed_inference', default='genconvit_ed_inference', help="weight for ed.",
     )
     parser.add_argument(
-        "--v", help="weight for vae.",
+        "--v", '--value', nargs='?', const='genconvit_vae_inference', default='genconvit_vae_inference', help="weight for vae.",
     )
+    
     parser.add_argument("--fp16", type=str, help="half precision support")
 
     args = parser.parse_args()
