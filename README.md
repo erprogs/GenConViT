@@ -123,14 +123,12 @@ Network B (vae)
 ```bash
 wget https://huggingface.co/Deressa/GenConViT/resolve/main/genconvit_vae_inference.pth
 ```
-Juts to save you from a surprise: :)
-The provided weights only have the state dict. i.e is its have the size of the weight you will get if you train for your self. e.g the VAE is normalyy 5GB-7GB.
 
-
-**Just to save you from a surprise :)
+**Just to save you from a surprise :)**
 
 The provided weights only include the state dictionary. This means that the size of the provided weights is approximately half of what you would get if you trained the model yourself. 
 For example, while the VAE is typically between 5GB and 7GB, the provided one is 2.6GB.
+
 
 2. Run the prediction script:
 
