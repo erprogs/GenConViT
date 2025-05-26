@@ -104,7 +104,6 @@ def df_face(vid, num_frames, net):
 
 
 def is_video(vid):
-    print('IS FILE', os.path.isfile(vid))
     return os.path.isfile(vid) and vid.endswith(
         tuple([".avi", ".mp4", ".mpg", ".mpeg", ".mov"])
     )
