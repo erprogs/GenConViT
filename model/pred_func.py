@@ -10,11 +10,13 @@ from dataset.loader import normalize_data
 from .config import load_config
 from .genconvit import GenConViT
 from decord import VideoReader, cpu
+import glob
+from PIL import Image
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
-def load_genconvit(config, net, ed_weight, vae_weight, fp16):
+def load_genconvit(config, net, ed_weight, vae_weight, fp16):    
     model = GenConViT(
         config,
         ed= ed_weight,
@@ -35,12 +37,13 @@ def face_rec(frames, p=None, klass=None):
     temp_face = np.zeros((len(frames), 224, 224, 3), dtype=np.uint8)
     count = 0
     mod = "cnn" if dlib.DLIB_USE_CUDA else "hog"
-
+    
     for _, frame in tqdm(enumerate(frames), total=len(frames)):
         frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
         face_locations = face_recognition.face_locations(
             frame, number_of_times_to_upsample=0, model=mod
         )
+        
 
         for face_location in face_locations:
             if count < len(frames):
@@ -89,15 +92,33 @@ def real_or_fake(prediction):
     return {0: "REAL", 1: "FAKE"}[prediction ^ 1]
 
 
-def extract_frames(video_file, frames_nums=15):
+def extract_frames(video_file, num_frames=15):
     vr = VideoReader(video_file, ctx=cpu(0))
-    step_size = max(1, len(vr) // frames_nums)  # Calculate the step size between frames
-    return vr.get_batch(
-        list(range(0, len(vr), step_size))[:frames_nums]
-    ).asnumpy()  # seek frames with step_size
+    total_frames = len(vr)
+
+    if num_frames == -1: 
+        # if -1, get all frames
+        indices = np.arange(total_frames).astype(int)
+    else:
+        indices = np.linspace(0, total_frames -1, num_frames, dtype=int) 
+    
+    return vr.get_batch(indices).asnumpy()  # seek frames with step_size
 
 
-def df_face(vid, num_frames, net):
+def df_face_from_folder(vid, num_frames):
+    img_list = glob.glob(vid+"/*")
+    img = []
+    for f in img_list:
+        try:
+            im = Image.open(f).convert('RGB')
+            img.append(np.asarray(im))
+        except:
+            pass
+ 
+    face, count = face_rec(img[:num_frames])
+    return preprocess_frame(face) if count > 0 else []
+
+def df_face(vid, num_frames):
     img = extract_frames(vid, num_frames)
     face, count = face_rec(img)
     return preprocess_frame(face) if count > 0 else []
@@ -107,6 +128,10 @@ def is_video(vid):
     return os.path.isfile(vid) and vid.endswith(
         tuple([".avi", ".mp4", ".mpg", ".mpeg", ".mov"])
     )
+
+def is_video_folder(vid_folder):
+    img_list = glob.glob(vid_folder+"/*")
+    return len(img_list)>=1 and img_list[0].endswith(tuple(["png", "jpeg","jpg"]))
 
 
 def set_result():
