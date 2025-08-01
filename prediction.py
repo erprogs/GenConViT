@@ -7,8 +7,7 @@ from model.pred_func import *
 from model.config import load_config
 
 config = load_config()
-print('CONFIG')
-print(config)
+
 def vids(
     ed_weight, vae_weight, root_dir="sample_prediction_data", dataset=None, num_frames=15, net=None, fp16=False
 ):
@@ -23,7 +22,8 @@ def vids(
         curr_vid = os.path.join(root_dir, filename)
 
         try:
-            if is_video(curr_vid):
+            is_vid_folder = is_video_folder(curr_vid)
+            if is_video(curr_vid) or is_vid_folder:
                 result, accuracy, count, pred = predict(
                     curr_vid,
                     model,
@@ -33,6 +33,7 @@ def vids(
                     net,
                     "uncategorized",
                     count,
+                    vid_folder=is_vid_folder
                 )
                 f, r = (f + 1, r) if "FAKE" == real_or_fake(pred[0]) else (f, r + 1)
                 print(
@@ -240,13 +241,22 @@ def predict(
     accuracy=-1,
     correct_label="unknown",
     compression=None,
+    vid_folder=None
 ):
     count += 1
     print(f"\n\n{str(count)} Loading... {vid}")
 
-    df = df_face(vid, num_frames, net)  # extract face from the frames
+    start_time = perf_counter()
+
+    # locate the extracted frames of the video if provided.
+    if vid_folder:
+        df = df_face_from_folder(vid, num_frames)
+    else:
+        df = df_face(vid, num_frames)  # extract face from the frames
+
     if fp16:
         df.half()
+    
     y, y_val = (
         pred_vid(df, model)
         if len(df) >= 1
@@ -263,6 +273,9 @@ def predict(
             f"\nPrediction: {y_val} {real_or_fake(y)} \t\t {accuracy}/{count} {accuracy/count}"
         )
 
+    end_time = perf_counter()
+    print("\n\n only one video--- %s seconds ---" % (end_time - start_time))
+    
     return result, accuracy, count, [y, y_val]
 
 
