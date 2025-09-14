@@ -207,7 +207,7 @@ python result_all.py
 ```bash
 @misc{wodajo2023deepfake,
       title={Deepfake Video Detection Using Generative Convolutional Vision Transformer}, 
-      author={Deressa Wodajo and Solomon Atnafu and Zahid Akhtar},
+      author={Deressa Wodajo and Hannes Mareen and Peter Lambert and Solomon Atnafu and Zahid Akhtar and Glenn Van Wallendael},
       year={2023},
       eprint={2307.07036},
       archivePrefix={arXiv},
@@ -215,6 +215,6 @@ python result_all.py
 }
 ```
 
-## Acknowledgement
+## FUNDING
 
-This research was funded by Addis Ababa University Research Grant for the Adaptive Problem-Solving Research. Reference number RD/PY-183/2021. Grant number AR/048/2021.
+This research was funded by Addis Ababa University Research Grant for the Adaptive Problem-Solving Research. Reference number RD/PY-183/2021. Grant number AR/048/2021, and the Research Foundation—Flanders (FWO under project grant G0A2523N), the Flemish government (COM-PRESS project, within the relanceplan Vlaamse Veerkracht), IDLab (Ghent University—imec), Flanders Innovation and Entrepreneurship (VLAIO), and the European Union.
