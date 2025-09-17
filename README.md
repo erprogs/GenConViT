@@ -1,7 +1,7 @@
 # Deepfake Video Detection Using Generative Convolutional Vision Transformer
 Deressa Wodajo, Hannes Mareen, Peter Lambert, Solomon Atnafu, Zahid Akhtar, Glenn Van Wallendael
 
-This repository contains the implementation code for **Deepfake Video Detection Using Generative Convolutional Vision Transformer (GenConViT)** paper. Find the full paper on arXiv [here](https://arxiv.org/abs/2307.07036 (old unupdated)) OR [MDPI](https://www.mdpi.com/2076-3417/15/12/6622).
+This repository contains the implementation code for **Deepfake Video Detection Using Generative Convolutional Vision Transformer (GenConViT)** paper. Find the full paper on arXiv [here (old unupdated)](https://arxiv.org/abs/2307.07036) OR [MDPI](https://www.mdpi.com/2076-3417/15/12/6622).
 
 <br/><br/>
 ![The Proposed GenConViT Deepfake Detection Framework](img/genconvit.png)
