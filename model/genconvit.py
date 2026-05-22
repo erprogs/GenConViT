@@ -10,6 +10,15 @@ class GenConViT(nn.Module):
         super(GenConViT, self).__init__()
         self.net = net
         self.fp16 = fp16
+        
+        # FEATURE ADDED: Dynamic preprocessing transform based on configuration
+        transform_list = [transforms.ToTensor()]
+        if hasattr(config, 'image_size'):
+            transform_list.insert(0, transforms.Resize((config.image_size, config.image_size)))
+        if getattr(config, 'normalize', False):
+            transform_list.append(transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]))
+        self.transform = transforms.Compose(transform_list)
+
         if self.net=='ed':
             try:
                 self.model_ed = GenConViTED(config)
@@ -34,6 +43,20 @@ class GenConViT(nn.Module):
                     self.model_vae.load_state_dict(self.checkpoint_vae['state_dict'])
                 else:
                     self.model_vae.load_state_dict(self.checkpoint_vae)
+            except FileNotFoundError:
+                raise Exception(f"Error: weight/{vae}.pth file not found.")
+
+    # FEATURE ADDED: Unified forward pass utilizing the selected network architecture
+    def forward(self, x):
+        if self.fp16 and x.dtype == torch.float32:
+            x = x.half()
+            
+        if self.net == 'ed':
+            return self.model_ed(x)
+        elif self.net == 'vae':
+            return self.model_vae(x)
+        else:
+            raise ValueError(f"Unknown network type: {self.net}")
                     
                 self.model_vae.eval()
                 if self.fp16:
